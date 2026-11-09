@@ -1,0 +1,928 @@
+<%@ Page Title="Account Created Successfully" Language="C#"
+MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="Success.aspx.cs"
+Inherits="CutsofCompassion.Success" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+  <style type="text/css">
+    /* General Reset */
+    * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+    }
+
+    body {
+       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+       background-color: #fffaf0; /* Light beige background */
+       color: #333; /* Default text color */
+
+    }
+
+    /* Success Message Container */
+    .success-container {
+
+       max-width: 800px;
+       margin: 50px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Heading */
+.heading {
+
+  font-size: 32px;
+  font-weight: bold;
+  color: #4CAF50; /* Green color for success */
+  margin-bottom: 20px;
+}
+
+/* Paragraph Text */
+.success-text {
+
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* Hyperlink Style */
+.success-text a {
+
+  color: #e55d87; /* Elegant pink for link */
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.success-text a:hover {
+  color: #d7385e; /* Darker pink on hover */
+  text-decoration: none;
+
+}
+
+/* Buttons */
+.buttons {
+
+  background-color: #e55d87;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttons:hover {
+  background-color: #d7385e; /* Darker pink on hover */
+  transform: scale(1.05); /* Slight enlargement */
+
+}
+/* Table Layout */
+table {
+
+  width: 100%;
+  margin-top: 20px;
+}
+
+td {
+  padding: 10px;
+
+}
+
+td.auto-style2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+  .success-container {
+    padding: 20px;
+
+  }
+
+  .buttons {
+    font-size: 14px;
+       }
+    }
+  </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1"
+runat="server">
+
+  <div class="success-container">
+    <!-- Heading -->
+    <div class="heading">Account Created Successfully</div>
+
+    <!-- Success Message -->
+    <p class="success-text">
+
+       Thank you for creating an account with us! Someone from our team will be in contact
+shortly.
+
+       If you have any questions or concerns, please use our
+       <asp:HyperLink ID="ContactHyperLink" runat="server"
+NavigateUrl="~/Contact.aspx">Contact Page</asp:HyperLink>
+&nbsp;to reach out.
+    </p>
+
+    <!-- Action Buttons -->
+    <table>
+
+       <tr>
+         <td class="auto-style2">If you made this account by mistake, please deactivate
+
+your account:</td>
+         <td class="auto-style2">If you need to make changes, update your account:</td>
+       </tr>
+       <tr>
+
+         <td>
+            <asp:Button ID="DeleteButton" runat="server" OnClick="DeleteButton_Click"
+
+Text="Delete Your Account" CssClass="buttons" />
+         </td>
+         <td>
+            <asp:Button ID="UpdateButton" runat="server" OnClick="UpdateButton_Click"
+
+Text="Update Your Account" CssClass="buttons" />
+         </td>
+
+       </tr>
+    </table>
+  </div>
+</asp:Content>
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace CutsofCompassion
+{
+   public partial class Success : System.Web.UI.Page
+  {
+
+     protected void Page_Load(object sender, EventArgs e)
+     {
+
+        if (Session["user"] == null)
+        {
+
+           // Redirect to the login page if the user is not logged in
+           Response.Redirect("default.aspx");
+        }
+     }
+
+     protected void UpdateButton_Click(object sender, EventArgs e)
+     {
+
+        Response.Redirect("update.aspx");
+     }
+
+     protected void DeleteButton_Click(object sender, EventArgs e)
+     {
+
+        Response.Redirect("delete.aspx");
+     }
+  }
+}
+
+<%@ Page Title="Delete Account" Language="C#" MasterPageFile="~/Site1.Master"
+AutoEventWireup="true" CodeBehind="delete.aspx.cs"
+Inherits="CutsofCompassion.delete" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+  <style type="text/css">
+     /* General Reset */
+     * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+     }
+
+     body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fffaf0; /* Light beige background */
+        color: #333;
+
+     }
+
+     /* Form Container */
+     .form-container {
+
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        text-align: center;
+     }
+/* Heading */
+.heading {
+
+  font-size: 32px;
+  font-weight: bold;
+  color: #e55d87; /* Elegant pink color */
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.buttons {
+
+  background-color: #e55d87;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttons:hover {
+  background-color: #d7385e; /* Darker pink on hover */
+  transform: scale(1.05); /* Slight enlargement */
+
+}
+/* Input Fields */
+input[type="text"] {
+
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input:focus {
+  border-color: #e55d87;
+  box-shadow: 0 0 6px rgba(229, 93, 135, 0.5);
+  outline: none;
+
+}
+
+/* Error Message */
+.error-message {
+
+  color: red;
+  font-size: 14px;
+}
+
+/* Success Message */
+.success-message {
+
+  color: green;
+        font-size: 14px;
+     }
+
+     /* Responsive Design */
+     @media (max-width: 768px) {
+
+        .form-container {
+           padding: 20px;
+
+        }
+
+        .buttons {
+           font-size: 14px;
+
+        }
+     }
+     .auto-style1 {
+
+        font-size: 32px;
+        font-weight: bold;
+        color: #e55d87; /* Elegant pink color */;
+        margin-bottom: 20px;
+        text-align: center;
+     }
+  </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1"
+runat="server">
+
+  <div class="form-container">
+     <!-- Page Heading -->
+     <div class="auto-style1">
+     <asp:Button Text="Home" ID="btnHome" runat="server"
+OnClick="btnHome_Click" CssClass="buttons" />
+
+        <br />
+        Delete Your Account</div>
+     <p>To delete your account, enter your email and press the delete button.</p>
+
+     <!-- Home Button -->
+
+     <!-- Delete Form -->
+     <asp:TextBox ID="DEmailTextBox" runat="server" Placeholder="Enter your email
+address"></asp:TextBox>
+
+     <!-- Delete Button -->
+     <asp:Button ID="DeleteButton" runat="server" OnClick="DeleteButton_Click"
+Text="Delete My Account" CssClass="buttons" />
+
+     <!-- Success/Error Messages -->
+     <asp:Label ID="ErrorLabel" runat="server" CssClass="error-message"
+Visible="false"></asp:Label>
+     <asp:Label ID="SuccessLabel" runat="server" CssClass="success-message"
+Visible="false"></asp:Label>
+
+     <!-- SQL DataSource -->
+     <asp:SqlDataSource ID="SqlDataSource1" runat="server"
+
+        ConnectionString="<%$ ConnectionStrings:Student4720ConnectionString %>"
+        DeleteCommand="DELETE FROM [Login] WHERE [Email] = @Email">
+        <DeleteParameters>
+
+           <asp:Parameter Name="Email" Type="String" />
+        </DeleteParameters>
+     </asp:SqlDataSource>
+  </div>
+</asp:Content>
+
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace CutsofCompassion
+{
+
+   public partial class delete : System.Web.UI.Page
+  {
+
+     protected void Page_Load(object sender, EventArgs e)
+     {
+
+        if (Session["user"] == null)
+        {
+           // Redirect to the login page if the user is not logged in
+           Response.Redirect("default.aspx");
+        }
+     }
+
+     protected void DeleteButton_Click(object sender, EventArgs e)
+     {
+
+        string userEmail = Session["Email"]?.ToString(); // Retrieve email from session
+        string enteredEmail = DEmailTextBox.Text;
+
+        if (string.IsNullOrEmpty(userEmail) || string.IsNullOrEmpty(enteredEmail))
+        {
+
+           // Handle empty values gracefully
+           Response.Write("<script>alert('Email is missing. Please try again.');</script>");
+           return;
+        }
+
+        if (userEmail.Equals(enteredEmail, StringComparison.OrdinalIgnoreCase))
+        {
+
+           try
+           {
+
+              using (SqlConnection dcon = new
+SqlConnection(SqlDataSource1.ConnectionString))
+
+              {
+                 using (SqlCommand dcommand = new
+
+SqlCommand(SqlDataSource1.DeleteCommand, dcon))
+                 {
+                    dcommand.Parameters.AddWithValue("@Email", userEmail);
+                    dcon.Open();
+                    int rowsAffected = dcommand.ExecuteNonQuery();
+                    dcon.Close();
+
+                    if (rowsAffected > 0)
+                    {
+
+                       Response.Redirect("Success.aspx");
+                    }
+                    else
+                    {
+
+                       Response.Write("<script>alert('No account found to
+delete.');</script>");
+
+                    }
+                 }
+              }
+           }
+           catch (Exception ex)
+           {
+              // Log error (in production use a logging framework)
+              Response.Write("<script>alert('An error occurred: " + ex.Message +
+"');</script>");
+           }
+        }
+        else
+        {
+           Response.Write("<script>alert('The email entered does not match your
+account.');</script>");
+
+        }
+     }
+  }
+}
+
+<%@ Page Title="Update Account" Language="C#" MasterPageFile="~/Site1.Master"
+AutoEventWireup="true" CodeBehind="update.aspx.cs"
+Inherits="CutsofCompassion.update" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+  <style type="text/css">
+     /* General Reset */
+     * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+     }
+
+     body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fffaf0; /* Light beige background */
+        color: #333; /* Default text color */
+
+     }
+
+     /* Form Container */
+.form-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+}
+
+/* Heading */
+.heading {
+
+  font-size: 32px;
+  font-weight: bold;
+  color: #e55d87; /* Elegant pink color */
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.buttons {
+
+  background-color: #e55d87;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.buttons:hover {
+  background-color: #d7385e; /* Darker pink on hover */
+  transform: scale(1.05); /* Slight enlargement */
+
+}
+
+/* Input Fields */
+input[type="text"], input[type="password"], textarea {
+
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input:focus, textarea:focus {
+  border-color: #e55d87;
+  box-shadow: 0 0 6px rgba(229, 93, 135, 0.5);
+  outline: none;
+
+}
+
+/* Table Layout */
+table {
+  width: 100%;
+  border-spacing: 0;
+  margin-top: 20px;
+
+}
+
+td {
+  padding: 10px;
+
+}
+
+td.auto-style2 {
+  text-align: left;
+  font-weight: bold;
+  color: #555;
+
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+  .form-container {
+     padding: 20px;
+
+  }
+        .buttons {
+           font-size: 14px;
+
+        }
+     }
+     .auto-style1 {
+
+        font-size: 32px;
+        font-weight: bold;
+        color: #e55d87; /* Elegant pink color */;
+        margin-bottom: 20px;
+        text-align: center;
+     }
+     .auto-style2 {
+        text-align: center;
+     }
+  </style>
+</asp:Content>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1"
+runat="server">
+
+  <div class="form-container">
+     <!-- Page Heading -->
+     <div class="auto-style1">Account Update</div>
+     <p class="auto-style2">Check the box for the information you want to update.</p>
+
+     <!-- Update Form -->
+     <table>
+        <tr>
+           <td style="text-align: center;">What do you want to update?</td>
+           <td>Current Information</td>
+           <td>Updated Value</td>
+        </tr>
+        <tr>
+           <td></td>
+           <td>Email:
+              <asp:Label ID="EmailLabel" runat="server"></asp:Label>
+           </td>
+           <td></td>
+        </tr>
+        <tr>
+           <td>
+              <asp:CheckBox ID="PassCheckBox" runat="server" AutoPostBack="True"
+
+OnCheckedChanged="PassCheckBox_CheckedChanged" />
+           </td>
+           <td>Password:
+              <asp:Label ID="PassLabel" runat="server"></asp:Label>
+           </td>
+           <td>
+              <asp:TextBox ID="txtPass" runat="server"></asp:TextBox>
+              <asp:RequiredFieldValidator ID="PassRFV" runat="server"
+
+ControlToValidate="txtPass" ErrorMessage="Required Field" CssClass="error-
+message"></asp:RequiredFieldValidator>
+
+           </td>
+        </tr>
+        <tr>
+
+           <td></td>
+           <td></td>
+           <td>
+
+              <asp:Label ID="ConPassLabel" runat="server" Text="Confirm
+Password"></asp:Label>
+
+              <asp:TextBox ID="txtCPass" runat="server"></asp:TextBox>
+              <asp:CompareValidator ID="PassCV" runat="server"
+ControlToValidate="txtCPass" ControlToCompare="txtPass" ErrorMessage="Passwords
+do not match" CssClass="error-message"></asp:CompareValidator>
+           </td>
+        </tr>
+        <tr>
+           <td>
+              <asp:CheckBox ID="FNCheckBox" runat="server" AutoPostBack="True"
+OnCheckedChanged="FNCheckBox_CheckedChanged" />
+           </td>
+           <td>First Name:
+              <asp:Label ID="FNLabel" runat="server"></asp:Label>
+           </td>
+           <td>
+              <asp:TextBox ID="txtFname" runat="server"></asp:TextBox>
+              <asp:RequiredFieldValidator ID="FNRFV" runat="server"
+ControlToValidate="txtFname" ErrorMessage="Required Field" CssClass="error-
+message"></asp:RequiredFieldValidator>
+           </td>
+        </tr>
+        <tr>
+           <td>
+              <asp:CheckBox ID="LNCheckBox" runat="server" AutoPostBack="True"
+
+OnCheckedChanged="LNCheckBox_CheckedChanged" />
+           </td>
+           <td>Last Name:
+              <asp:Label ID="LNLabel" runat="server"></asp:Label>
+           </td>
+           <td>
+              <asp:TextBox ID="txtLname" runat="server"></asp:TextBox>
+              <asp:RequiredFieldValidator ID="LNRFV" runat="server"
+
+ControlToValidate="txtLname" ErrorMessage="Required Field" CssClass="error-
+message"></asp:RequiredFieldValidator>
+
+           </td>
+        </tr>
+        <tr>
+
+           <td>
+              <asp:CheckBox ID="YOBCheckBox" runat="server" AutoPostBack="True"
+
+OnCheckedChanged="YOBCheckBox_CheckedChanged" />
+           </td>
+           <td>Year of Birth:
+              <asp:Label ID="YOBLabel" runat="server"></asp:Label>
+           </td>
+           <td>
+              <asp:TextBox ID="txtYOB" runat="server"></asp:TextBox>
+              <asp:RequiredFieldValidator ID="YOBRFV" runat="server"
+
+ControlToValidate="txtYOB" ErrorMessage="Required Field" CssClass="error-
+message"></asp:RequiredFieldValidator>
+              <asp:RangeValidator ID="YOBRangeValidator" runat="server"
+ControlToValidate="txtYOB" MinimumValue="1900" MaximumValue="2100"
+Type="Integer" ErrorMessage="Year must be valid" CssClass="error-
+message"></asp:RangeValidator>
+
+           </td>
+        </tr>
+        <tr>
+
+           <td>
+              <asp:SqlDataSource ID="SqlDataSource1"
+
+runat="server"></asp:SqlDataSource>
+           </td>
+           <td></td>
+           <td>
+              <asp:Button ID="UpdateButton" runat="server" Text="Update Information"
+
+CssClass="buttons" OnClick="UpdateButton_Click" />
+           </td>
+
+        </tr>
+     </table>
+
+     <!-- Error Message -->
+     <asp:Label ID="ErrorLabel" runat="server" CssClass="error-message"></asp:Label>
+  </div>
+</asp:Content>
+
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace CutsofCompassion
+{
+
+   public partial class update : System.Web.UI.Page
+  {
+
+     protected void Page_Load(object sender, EventArgs e)
+     {
+
+        if (Session["User"] == null)
+        {
+
+           Response.Redirect("default.aspx");
+        }
+
+        if (!IsPostBack)
+        {
+
+           // Initially hide all textboxes and labels
+           txtPass.Visible = false;
+           txtCPass.Visible = false;
+           txtFname.Visible = false;
+           txtLname.Visible = false;
+           txtYOB.Visible = false;
+           // Declare variables for storing data from the database
+           string sEmail = "";
+           string sPass = "";
+           string sFname = "";
+           string sLname = "";
+           string sYOB = "";
+
+           // SQL Connection and Command to fetch data based on Email
+           SqlDataReader myReader;
+           using (SqlConnection myConnection = new
+SqlConnection(SqlDataSource1.ConnectionString))
+           {
+
+              // SQL Command to select user by Email
+              string query = "SELECT Email, Password, FName, LName, YOB FROM
+dbo.Login WHERE Email = @Email"; // Assuming the schema is dbo
+              using (SqlCommand myCommand = new SqlCommand(query,
+myConnection))
+              {
+
+                 myCommand.Parameters.AddWithValue("@Email", EmailLabel.Text);
+
+                 // Open the database connection
+                 myConnection.Open();
+                 myReader =
+myCommand.ExecuteReader(CommandBehavior.CloseConnection);
+// Read the data from the database
+while (myReader.Read())
+{
+
+   sEmail = myReader.GetString(0);
+   sPass = myReader.GetString(1);
+   sFname = myReader.GetString(2);
+   sLname = myReader.GetString(3);
+   sYOB = myReader.GetInt32(4).ToString();
+
+   // Populate labels with the data
+   EmailLabel.Text = sEmail;
+   PassLabel.Text = sPass;
+   FNLabel.Text = sFname;
+   LNLabel.Text = sLname;
+  YOBLabel.Text = sYOB;
+
+   // Populate textboxes only if the corresponding checkbox is checked
+   if (PassCheckBox.Checked)
+   {
+
+      txtPass.Text = sPass;
+   }
+
+   if (FNCheckBox.Checked)
+   {
+
+      txtFname.Text = sFname;
+                    }
+
+                    if (LNCheckBox.Checked)
+                    {
+
+                       txtLname.Text = sLname;
+                    }
+
+                    if (YOBCheckBox.Checked)
+                    {
+
+                       txtYOB.Text = sYOB;
+                    }
+                 }
+              }
+           }
+        }
+     }
+
+     protected void BtnuUpdate_Click(object sender, EventArgs e)
+     {
+
+        // Declare a connection to the database
+        using (SqlConnection UConnection = new
+SqlConnection(SqlDataSource1.ConnectionString))
+        {
+
+           string updateQuery = "UPDATE Users SET Password = @Password, FirstName
+= @Fname, LastName = @Lname, YOB = @YOB WHERE Email = @Email";
+
+           using (SqlCommand UCommand = new SqlCommand(updateQuery,
+UConnection))
+{
+  // Set the email parameter
+  UCommand.Parameters.AddWithValue("@Email", EmailLabel.Text);
+
+  // Check if the checkbox for each field is checked and add parameters
+  if (PassCheckBox.Checked == true)
+  {
+
+     UCommand.Parameters.AddWithValue("@Password", txtPass.Text);
+  }
+  else
+  {
+
+     // Use the previous password value if checkbox is not checked
+     UCommand.Parameters.AddWithValue("@Password", PassLabel.Text);
+  }
+
+  if (FNCheckBox.Checked == true)
+  {
+
+     UCommand.Parameters.AddWithValue("@Fname", txtFname.Text);
+  }
+  else
+  {
+
+     // Use the previous first name value if checkbox is not checked
+     UCommand.Parameters.AddWithValue("@Fname", FNLabel.Text);
+  }
+
+  if (LNCheckBox.Checked == true)
+{
+  UCommand.Parameters.AddWithValue("@Lname", txtLname.Text);
+
+}
+else
+{
+
+  // Use the previous last name value if checkbox is not checked
+  UCommand.Parameters.AddWithValue("@Lname", LNLabel.Text);
+}
+
+if (YOBCheckBox.Checked == true)
+{
+
+  UCommand.Parameters.AddWithValue("@YOB", txtYOB.Text);
+}
+else
+{
+
+  // Use the previous YOB value if checkbox is not checked
+  UCommand.Parameters.AddWithValue("@YOB", YOBLabel.Text);
+}
+
+try
+{
+
+  // Open the connection and execute the command
+  UConnection.Open();
+  UCommand.ExecuteNonQuery();
+  UConnection.Close();
+        }
+        finally
+        {
+
+           // Redirect to another page after updating
+           Response.Redirect("default.aspx");
+        }
+     }
+  }
+}
+protected void LNCheckBox_CheckedChanged(object sender, EventArgs e)
+{
+  // Hide or show the textbox based on the checkbox status
+  txtLname.Visible = LNCheckBox.Checked;
+}
+
+protected void YOBCheckBox_CheckedChanged(object sender, EventArgs e)
+{
+
+  // Hide or show the textbox based on the checkbox status
+  txtYOB.Visible = YOBCheckBox.Checked;
+}
+
+protected void PassCheckBox_CheckedChanged(object sender, EventArgs e)
+{
+
+  // Hide or show the textboxes for password based on the checkbox status
+  txtPass.Visible = PassCheckBox.Checked;
+  txtCPass.Visible = PassCheckBox.Checked;
+     }
+
+     protected void FNCheckBox_CheckedChanged(object sender, EventArgs e)
+     {
+
+        txtFname.Visible = FNCheckBox.Checked;
+
+     }
+  }
+}
+
